@@ -1,0 +1,8 @@
+{
+  "name": "freshride",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue",
+  "id": "dab10ce3"
+}
