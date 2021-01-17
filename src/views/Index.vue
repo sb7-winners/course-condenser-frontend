@@ -5,28 +5,20 @@
         <ion-buttons slot="start">
           <ion-menu-button color="primary"></ion-menu-button>
         </ion-buttons>
-        <ion-title>{{ $route.params.id }}</ion-title>
+        <ion-title>Learne</ion-title>
       </ion-toolbar>
     </ion-header>
 
     <ion-content :fullscreen="true">
       <ion-header collapse="condense">
         <ion-toolbar>
-          <ion-title size="large">{{ $route.params.id }}</ion-title>
+          <ion-title size="large">Login</ion-title>
         </ion-toolbar>
       </ion-header>
 
       <div id="container">
-        <strong class="capitalize">Success bitch</strong>
-        <p>
-          Explore
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
-            href="https://ionicframework.com/docs/components"
-            >UI Components</a
-          >
-        </p>
+        <strong class="capitalize">Login</strong>
+        <div id="firebaseui-auth-container"></div>
       </div>
     </ion-content>
   </ion-page>
@@ -42,9 +34,17 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/vue";
-
+import { auth } from "../firebase";
+let firebaseui = require("firebaseui");
+import firebase from "firebase/app";
 export default {
-  name: "Folder",
+  mounted() {
+    let ui = new firebaseui.auth.AuthUI(auth);
+    ui.start("#firebaseui-auth-container", {
+      signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID],
+      signInSuccessUrl: location.href + 'folder/home',
+    });
+  },
   components: {
     IonButtons,
     IonContent,
