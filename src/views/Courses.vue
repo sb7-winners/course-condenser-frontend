@@ -87,7 +87,7 @@ export default {
         axios
           .get("http://localhost:5000/getMostRecents", {
             headers: {
-              Authorization: "Bearer " + token,
+              Authorization: token,
             },
           })
           .then((response) => {
