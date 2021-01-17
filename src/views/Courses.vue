@@ -103,7 +103,7 @@ export default {
     auth.currentUser.getIdToken().then(
       function(token) {
         axios
-          .get("http://localhost:5000/getAllCourses", {
+          .get("https://letslearne.loca.lt/getAllCourses", {
             headers: {
               Authorization: token,
             },

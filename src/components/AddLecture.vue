@@ -44,7 +44,7 @@ export default defineComponent({
       auth.currentUser.getIdToken().then(
         function (token) {
           axios
-            .post("http://localhost:5000/processLecture", {
+            .post("https://letslearne.loca.lt/processLecture", {
               headers: {
                 Authorization: token,
               },
