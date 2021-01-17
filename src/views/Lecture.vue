@@ -21,14 +21,13 @@
                   :courseName="courseName"
                   :color="courseColor"
                 />
-                {{ $route.params.id }}
                 <timestamp-list :timestamps="summaryTimestamps" />
               </div>
             </ion-col>
 
             <ion-col>
               <div>
-                <video-player :id="videoId" />
+                <video-player v-if="videoId != ''" :id="videoId" />
                 <transcript-viewer :timestamps="fullTimestamps" />
               </div>
             </ion-col>
@@ -56,6 +55,7 @@ import TimestampList from "../components/TimestampList.vue";
 import TranscriptViewer from "../components/TranscriptViewer.vue";
 import VideoPlayer from "../components/VideoPlayer.vue";
 import axios from "axios";
+import { auth } from "../firebase";
 
 export default {
   name: "Folder",
@@ -76,12 +76,8 @@ export default {
   },
   data() {
     return {
-      lectureTitle: "Lecture 1: Intro to Probability",
-      lectureMainSummary:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus vel erat tempor, rutrum tortor ac, feugiat mi. \
-                               Proin interdum, ligula sed fermentum commodo, erat justo rutrum lacus, quis lobortis velit tellus in velit. \
-                               Quisque felis arcu, consectetur ac imperdiet et, varius ac neque. Sed at sem eros. Donec turpis lectus, euismod \
-                               sed egestas sit amet, vulputate sit amet ex. Nullam eros mauris, ullamcorper vitae varius at, sodales at mi.",
+      lectureTitle: "",
+      lectureMainSummary: "",
       courseName: "PSTAT 512B",
       courseColor: "#1554f6",
       summaryTimestamps: [
@@ -90,23 +86,43 @@ export default {
         ["Lorem ipsum, this is a sentence.", 390.451],
         ["Lorem ipsum, this is a sentence.", 510.612],
       ],
-      fullTimestamps: [
-        ["Lorem ipsum, this is a sentence.", 1.38],
-        ["Lorem ipsum, this is a sentence.", 60.1],
-        ["Lorem ipsum, this is a sentence.", 120.451],
-        ["Lorem ipsum, this is a sentence.", 180.1],
-        ["Lorem ipsum, this is a sentence.", 240.38],
-        ["Lorem ipsum, this is a sentence.", 283.199],
-        ["Lorem ipsum, this is a sentence.", 390.451],
-        ["Lorem ipsum, this is a sentence.", 450.681],
-        ["Lorem ipsum, this is a sentence.", 510.612],
-      ],
-      videoId: "bMDVSTnNHEU",
+      fullTimestamps: [],
+      videoId: "",
     };
   },
   mounted: function() {
-    let id = $route.params.id;
-    axios.get;
+    let id = this.$route.params.id;
+    auth.currentUser.getIdToken().then(
+      function(token) {
+        axios
+          .get("http://e1f788fb04f4.ngrok.io/getLecture", {
+            headers: {
+              Authorization: token,
+            },
+            params: {
+              lecture_id: id,
+            },
+          })
+          .then((res) => {
+            this.lectureTitle = res.data.title;
+            this.lectureMainSummary = res.data.key_points;
+            this.courseName = "";
+            this.courseColor = "#000000";
+            this.fullTimestamps = res.data.sentences;
+
+            // From StackOverflow
+            var p = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
+            if (res.data.url.match(p)) {
+              this.videoId = RegExp.$1;
+            }
+
+            console.log(this);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }.bind(this)
+    );
   },
 };
 </script>
