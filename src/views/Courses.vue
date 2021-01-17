@@ -22,11 +22,11 @@
                 :name="course"
                 @open-course="onOpenCourse"
               />
-              <course-folder
+              <!-- <course-folder
                 icon="add"
                 name="New Course"
                 @open-course="onOpenCourse"
-              />
+              /> -->
             </div>
           </ion-col>
 

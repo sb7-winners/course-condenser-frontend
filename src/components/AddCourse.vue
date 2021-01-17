@@ -1,7 +1,7 @@
 <template>
   <ion-header>
     <ion-toolbar>
-      <ion-title>New Lecture for {{ course }}</ion-title>
+      <ion-title>New Course for {{ course }}</ion-title>
     </ion-toolbar>
   </ion-header>
   <ion-content class="ion-padding">
