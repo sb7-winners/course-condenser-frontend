@@ -30,8 +30,13 @@
               </div>
             </ion-col>
             <ion-col>
-              Lectures for current course
-              {{ openCourse }}
+              <div>
+                Lectures for current course
+                {{ openCourse }}
+              </div>
+              <div>
+                {{ token }}
+              </div>
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -51,6 +56,8 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/vue";
+import { auth } from "../firebase.js";
+import axios from "axios";
 import CourseFolder from "../components/CourseFolder.vue";
 
 export default {
@@ -70,7 +77,27 @@ export default {
     return {
       courses: ["PSTAT 512", "MATH 512", "CS 512", "ASTRO 512"],
       openCourse: "",
+      token: "",
     };
+  },
+  mounted: function() {
+    auth.currentUser.getIdToken().then(
+      function(token) {
+        console.log(token);
+        axios
+          .get("http://localhost:5000/getMostRecents", {
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+          })
+          .then((response) => {
+            console.log(response);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }.bind(this)
+    );
   },
   methods: {
     onOpenCourse: function(newCourse) {
