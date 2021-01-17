@@ -1,5 +1,5 @@
 <template>
-  <div class="separated-row" @click="setTime">
+  <div :class="classname" @click="setTime">
     {{ sentence }}
     {{ humanTimestamp }}
   </div>
@@ -10,6 +10,8 @@ export default {
   props: {
     sentence: String,
     time: Number,
+    currentTime: Number,
+    inMenu: Boolean,
   },
   computed: {
     humanTimestamp: function() {
@@ -21,13 +23,18 @@ export default {
           .padStart(2, "0")
       );
     },
+
+    classname: function() {
+      return (this.time == this.currentTime ? "active" : "") + " separated-row";
+    },
   },
   methods: {
     setTime() {
-      this.$store.commit("set", {
-        time: this.time,
-      });
-      console.log(this.$store.state.time);
+      if (this.inMenu) {
+        this.$store.commit("set", {
+          time: this.time,
+        });
+      }
     },
   },
 };
@@ -38,5 +45,9 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+}
+
+.active {
+  font-weight: bold;
 }
 </style>
