@@ -1,7 +1,7 @@
 <template>
   <div :class="classname" @click="setTime">
-    {{ sentence }}
-    {{ humanTimestamp }}
+    <span>{{ sentence }}</span>
+    <span class="timestamp">{{ humanTimestamp }}</span>
   </div>
 </template>
 
@@ -45,6 +45,10 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+}
+
+.timestamp {
+  color: var(--ion-color-tertiary);
 }
 
 .active {

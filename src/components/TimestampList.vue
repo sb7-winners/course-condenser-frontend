@@ -1,12 +1,15 @@
 <template>
-  <timestamp
-    v-for="timestamp in timestamps"
-    :key="timestamp[1]"
-    :sentence="timestamp[0]"
-    :time="timestamp[1]"
-    :currentTime="currentSentenceTime"
-    :inMenu="true"
-  />
+  <div class="timestamps-container">
+    <timestamp
+      v-for="timestamp in timestamps"
+      :key="timestamp[1]"
+      :sentence="timestamp[0]"
+      :time="timestamp[1]"
+      :currentTime="currentSentenceTime"
+      :inMenu="true"
+      class="contents-timestamp"
+    />
+  </div>
 </template>
 
 <script>
@@ -43,4 +46,12 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.timestamps-container {
+  padding: 20px 40px;
+}
+
+.contents-timestamp {
+  margin: 20px 0;
+}
+</style>
