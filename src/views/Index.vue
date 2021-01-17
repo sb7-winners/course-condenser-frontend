@@ -1,36 +1,25 @@
 <template>
-  <ion-page>
-    <ion-header :translucent="true">
+  <ion-content :fullscreen="true" v-show="!hide">
+    <ion-header collapse="condense">
       <ion-toolbar>
-        <ion-buttons slot="start">
-          <ion-menu-button color="primary"></ion-menu-button>
-        </ion-buttons>
-        <ion-title>Learne</ion-title>
+        <ion-title size="large">Login</ion-title>
       </ion-toolbar>
     </ion-header>
 
-    <ion-content :fullscreen="true">
-      <ion-header collapse="condense">
-        <ion-toolbar>
-          <ion-title size="large">Login</ion-title>
-        </ion-toolbar>
-      </ion-header>
-
-      <div id="container">
-        <strong class="capitalize">Login</strong>
-        <div id="firebaseui-auth-container"></div>
-      </div>
-    </ion-content>
-  </ion-page>
+    <div id="container">
+      <strong class="capitalize">Login</strong>
+      <div @click="hide = true" id="firebaseui-auth-container"></div>
+    </div>
+  </ion-content>
 </template>
 
 <script>
 import {
-  IonButtons,
+  // IonButtons,
   IonContent,
   IonHeader,
-  IonMenuButton,
-  IonPage,
+  // IonMenuButton,
+  // IonPage,
   IonTitle,
   IonToolbar,
 } from "@ionic/vue";
@@ -38,19 +27,24 @@ import { auth } from "../firebase";
 let firebaseui = require("firebaseui");
 import firebase from "firebase/app";
 export default {
+  data() {
+    return {
+      hide: false,
+    };
+  },
   mounted() {
     let ui = new firebaseui.auth.AuthUI(auth);
     ui.start("#firebaseui-auth-container", {
       signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID],
-      signInSuccessUrl: location.href + 'folder/home',
+      signInSuccessUrl: location.href + "courses",
     });
   },
   components: {
-    IonButtons,
+    // IonButtons,
     IonContent,
     IonHeader,
-    IonMenuButton,
-    IonPage,
+    // IonMenuButton,
+    // IonPage,
     IonTitle,
     IonToolbar,
   },
