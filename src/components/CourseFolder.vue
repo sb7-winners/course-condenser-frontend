@@ -1,6 +1,6 @@
 <template>
   <div class="container" @click="$emit('open-course', name)">
-    <ion-icon class="course-folder-icon" name="book" size="large" />
+    <ion-icon class="course-folder-icon" :name="icon" size="large" />
     {{ name }}
   </div>
 </template>
@@ -11,6 +11,7 @@ import { IonIcon } from "@ionic/vue";
 export default {
   props: {
     name: String,
+    icon: { type: String, default: "Book" },
   },
   components: {
     IonIcon,

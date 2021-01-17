@@ -1,11 +1,16 @@
 <template>
   <ion-header>
     <ion-toolbar>
-      <ion-title>{{ title }}</ion-title>
+      <ion-title>New Lecture for {{course}}</ion-title>
     </ion-toolbar>
   </ion-header>
   <ion-content class="ion-padding">
-    {{ content }}
+    <ion-item>
+      <ion-label position="floating">Lecture Name</ion-label>
+      <ion-input></ion-input>
+    </ion-item>
+    <br />
+    <ion-button @click="save" color="dark">Save</ion-button>
   </ion-content>
 </template>
 
@@ -16,7 +21,7 @@ import { defineComponent } from "vue";
 export default defineComponent({
   name: "Modal",
   props: {
-    title: { type: String, default: "Super Modal" },
+    course: { type: String},
   },
   data() {
     return {

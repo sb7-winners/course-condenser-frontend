@@ -1,6 +1,6 @@
 <template>
   <ion-content :fullscreen="true">
-    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed" v-if="openCourse">
       <ion-fab-button>
         <ion-icon @click="openCreateLecture" name="add"></ion-icon>
       </ion-fab-button>
@@ -22,6 +22,11 @@
                 :name="course"
                 @open-course="onOpenCourse"
               />
+              <course-folder
+                icon="add"
+                name="New Course"
+                @open-course="onOpenCourse"
+              />
             </div>
           </ion-col>
 
@@ -31,7 +36,7 @@
           <ion-col>
             <div v-if="openCourse">
               <ion-text>
-                <h1>
+                <h1 style="font-size: 48px; margin-top: -15px;">
                   {{ openCourse }}
                 </h1>
               </ion-text>
@@ -64,7 +69,7 @@ import {
   IonHeader,
   IonTitle,
   IonToolbar,
-  modalController,
+  popoverController,
 } from "@ionic/vue";
 import { auth } from "../firebase.js";
 import axios from "axios";
@@ -108,9 +113,9 @@ export default {
   },
   methods: {
     async openCreateLecture() {
-      const modal = await modalController.create({
+      const modal = await popoverController.create({
         component: AddLecture,
-        componentProps: { title: "Test" },
+        componentProps: { course: this.openCourse },
       });
       return modal.present();
     },
