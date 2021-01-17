@@ -1,4 +1,5 @@
 import { createApp } from "vue";
+import { createStore } from "vuex";
 import App from "./App.vue";
 import router from "./router";
 import { auth } from "./firebase";
@@ -26,11 +27,25 @@ import VueYoutubeIframe from "@techassi/vue-youtube-iframe";
 /* Theme variables */
 import "./theme/variables.css";
 
+const store = createStore({
+  state() {
+    return {
+      time: 0,
+    };
+  },
+  mutations: {
+    set(state, payload) {
+      state.time = payload.time;
+    },
+  },
+});
+
 // auth.onAuthStateChanged( () => {console.log('hi')})
 let app;
 auth.onAuthStateChanged(() => {
   if (!app) {
     app = createApp(App)
+      .use(store)
       .use(IonicVue)
       .use(router)
       .use(VueYoutubeIframe);

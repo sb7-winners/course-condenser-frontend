@@ -1,5 +1,5 @@
 <template>
-  <div class="separated-row">
+  <div class="separated-row" @click="setTime">
     {{ sentence }}
     {{ humanTimestamp }}
   </div>
@@ -14,12 +14,20 @@ export default {
   computed: {
     humanTimestamp: function() {
       return (
-        Math.round(this.time / 60).toString() +
+        Math.floor(this.time / 60).toString() +
         ":" +
         Math.round(this.time % 60)
           .toString()
           .padStart(2, "0")
       );
+    },
+  },
+  methods: {
+    setTime() {
+      this.$store.commit("set", {
+        time: this.time,
+      });
+      console.log(this.$store.state.time);
     },
   },
 };
