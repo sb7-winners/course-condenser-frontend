@@ -1,16 +1,25 @@
 <template>
-  <div v-for="timestamp in timestamps" :key="timestamp[1]">
-    <timestamp
-      :sentence="timestamp[0]"
-      :time="timestamp[1]"
-      :currentTime="currentSentenceTime"
-      :inMenu="false"
-    />
+  <div class="transcript">
+    <div v-for="timestamp in timestamps" :key="timestamp[1]">
+      <timestamp
+        :sentence="timestamp.sentence"
+        :time="timestamp.start_time"
+        :currentTime="currentSentenceTime"
+        :inMenu="false"
+        class="indiv-timestamp"
+      />
+    </div>
   </div>
 </template>
 
 <script>
 import Timestamp from "./Timestamp.vue";
+
+function numericTime(time) {
+  let minutes = time.substring(0, 2);
+  let seconds = time.substring(3, 5);
+  return parseInt(minutes) * 60 + parseInt(seconds);
+}
 
 export default {
   props: {
@@ -30,8 +39,8 @@ export default {
     time: function(val) {
       // Find last timestamp with time < current time, or if none exist, use first timestamp
       for (let i = this.timestamps.length - 1; i >= 0; i--) {
-        if (this.timestamps[i][1] < val || i == 0) {
-          this.currentSentenceTime = this.timestamps[i][1];
+        if (numericTime(this.timestamps[i].start_time) <= val || i == 0) {
+          this.currentSentenceTime = numericTime(this.timestamps[i].start_time);
           break;
         }
       }
@@ -43,4 +52,13 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.transcript {
+  max-height: 40vh;
+  overflow-y: scroll;
+}
+
+.indiv-timestamp {
+  margin: 10px 0;
+}
+</style>

@@ -1,14 +1,5 @@
 <template>
   <ion-page>
-    <ion-header :translucent="true">
-      <ion-toolbar>
-        <ion-buttons slot="start">
-          <ion-menu-button color="primary"></ion-menu-button>
-        </ion-buttons>
-        <ion-title>{{ lectureTitle }}</ion-title>
-      </ion-toolbar>
-    </ion-header>
-
     <ion-content :fullscreen="true">
       <div id="container">
         <ion-grid>
@@ -39,17 +30,7 @@
 </template>
 
 <script lang="ts">
-import {
-  IonButtons,
-  IonCol,
-  IonContent,
-  IonGrid,
-  IonHeader,
-  IonMenuButton,
-  IonPage,
-  IonTitle,
-  IonToolbar,
-} from "@ionic/vue";
+import { IonCol, IonContent, IonGrid, IonPage } from "@ionic/vue";
 import LectureInfo from "../components/LectureInfo.vue";
 import TimestampList from "../components/TimestampList.vue";
 import TranscriptViewer from "../components/TranscriptViewer.vue";
@@ -60,15 +41,10 @@ import { auth } from "../firebase";
 export default {
   name: "Folder",
   components: {
-    IonButtons,
     IonCol,
     IonContent,
     IonGrid,
-    IonHeader,
-    IonMenuButton,
     IonPage,
-    IonTitle,
-    IonToolbar,
     LectureInfo,
     TimestampList,
     TranscriptViewer,
