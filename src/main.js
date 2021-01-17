@@ -31,11 +31,15 @@ const store = createStore({
   state() {
     return {
       time: 0,
+      refresh: 0,
     };
   },
   mutations: {
     set(state, payload) {
       state.time = payload.time;
+    },
+    refresh(state) {
+      state.refresh++;
     },
   },
 });

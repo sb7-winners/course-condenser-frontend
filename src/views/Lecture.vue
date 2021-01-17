@@ -55,7 +55,7 @@ import LectureInfo from "../components/LectureInfo.vue";
 import TimestampList from "../components/TimestampList.vue";
 import TranscriptViewer from "../components/TranscriptViewer.vue";
 import VideoPlayer from "../components/VideoPlayer.vue";
-import axios from "axios";
+// import axios from "axios";
 
 export default {
   name: "Folder",
@@ -105,8 +105,8 @@ export default {
     };
   },
   mounted: function() {
-    let id = $route.params.id;
-    axios.get;
+    // let id = this.$route.params.id;
+    // axios.get;
   },
 };
 </script>
