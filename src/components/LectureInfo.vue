@@ -1,22 +1,38 @@
 <template>
   <div class="container">
-    <h1 class="title">{{title}}</h1>
-    {{summary}}
+    <div class="separated-row">
+      <h1 class="title">{{ title }}</h1>
+      <course-info :name="courseName" :color="color" />
+    </div>
+    <p>{{ summary }}</p>
   </div>
 </template>
 
 <script>
+import CourseInfo from "./CourseInfo.vue";
+
 export default {
-    props: {
-        title: String,
-        summary: String
-    }
-}
+  props: {
+    title: String,
+    summary: String,
+    courseName: String,
+    color: String,
+  },
+  components: {
+    CourseInfo,
+  },
+};
 </script>
 
 <style>
+.separated-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 .title {
-  font-size: 3rem;
+  font-size: 2rem;
   font-weight: bold;
 }
 </style>
