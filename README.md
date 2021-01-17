@@ -1,4 +1,4 @@
-# freshride-app
+# course condenser frontend
 
 ## Install dependencies
 
