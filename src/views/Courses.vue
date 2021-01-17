@@ -1,89 +1,96 @@
 <template>
-  <ion-page>
-    <ion-header :translucent="true">
+  <ion-content :fullscreen="true">
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button>
+        <ion-icon @click="openCreateLecture" name="add"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+    <ion-header collapse="condense">
       <ion-toolbar>
-        <ion-buttons slot="start">
-          <ion-menu-button color="primary"></ion-menu-button>
-        </ion-buttons>
-        <ion-title>{{ $route.params.id }}</ion-title>
+        <ion-title size="large">{{ $route.params.id }}</ion-title>
       </ion-toolbar>
     </ion-header>
 
-    <ion-content :fullscreen="true">
-      <ion-header collapse="condense">
-        <ion-toolbar>
-          <ion-title size="large">{{ $route.params.id }}</ion-title>
-        </ion-toolbar>
-      </ion-header>
+    <div id="container">
+      <ion-grid class="grid">
+        <ion-row>
+          <ion-col class="folders-panel">
+            <div class="folders">
+              <course-folder
+                v-for="course in courses"
+                :key="course"
+                :name="course"
+                @open-course="onOpenCourse"
+              />
+            </div>
+          </ion-col>
 
-      <div id="container">
-        <ion-grid class="grid">
-          <ion-row>
-            <ion-col class="folders-panel">
-              <div class="folders">
-                <course-folder
-                  v-for="course in courses"
-                  :key="course"
-                  :name="course"
-                  @open-course="onOpenCourse"
-                />
-              </div>
-            </ion-col>
-            <ion-col>
-              <div>
-                Lectures for current course
-                {{ openCourse }}
-              </div>
-              <div>
-                {{ token }}
-              </div>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </div>
-    </ion-content>
-  </ion-page>
+          <!-- <ion-item-divider>
+              <ion-label> Basic Item Divider </ion-label>
+            </ion-item-divider> -->
+          <ion-col>
+            <div v-if="openCourse">
+              <ion-text>
+                <h1>
+                  {{ openCourse }}
+                </h1>
+              </ion-text>
+            </div>
+            <ion-text v-else>
+              <h2
+                style="
+                  display: flex;
+                  height: 100%;
+                  align-items: center;
+                  justify-content: center;
+                "
+              >
+                Select a course to get started
+              </h2>
+            </ion-text>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </ion-content>
 </template>
 
 <script>
 import {
-  IonButtons,
   IonContent,
   IonGrid,
+  IonCol,
+  IonRow,
   IonHeader,
-  IonMenuButton,
-  IonPage,
   IonTitle,
   IonToolbar,
+  modalController,
 } from "@ionic/vue";
 import { auth } from "../firebase.js";
 import axios from "axios";
 import CourseFolder from "../components/CourseFolder.vue";
-
+import AddLecture from "../components/AddLecture.vue";
 export default {
   name: "Folder",
   components: {
     CourseFolder,
-    IonButtons,
     IonContent,
     IonGrid,
+    IonCol,
+    IonRow,
     IonHeader,
-    IonMenuButton,
-    IonPage,
     IonTitle,
     IonToolbar,
   },
-  data: function() {
+  data: function () {
     return {
       courses: ["PSTAT 512", "MATH 512", "CS 512", "ASTRO 512"],
       openCourse: "",
-      token: "",
     };
   },
-  mounted: function() {
+  mounted: function () {
     auth.currentUser.getIdToken().then(
-      function(token) {
-        console.log(token);
+      function (token) {
         axios
           .get("http://localhost:5000/getMostRecents", {
             headers: {
@@ -100,7 +107,14 @@ export default {
     );
   },
   methods: {
-    onOpenCourse: function(newCourse) {
+    async openCreateLecture() {
+      const modal = await modalController.create({
+        component: AddLecture,
+        componentProps: { title: "Test" },
+      });
+      return modal.present();
+    },
+    onOpenCourse: function (newCourse) {
       this.openCourse = newCourse;
     },
   },
@@ -111,7 +125,7 @@ export default {
 #container {
   height: 100%;
   padding-top: 80px;
-  text-align: center;
+  /* text-align: center; */
   position: absolute;
   left: 0;
   right: 0;
@@ -140,12 +154,12 @@ export default {
 }
 
 .folders-panel {
-  background-color: var(--ion-color-light);
+  /* background-color: var(--ion-color-light); */
 }
 
 .folders {
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-around; */
   flex-wrap: wrap;
 }
 </style>
