@@ -97,7 +97,7 @@ export default {
     IonToolbar,
     LectureFile,
   },
-  data: function () {
+  data: function() {
     return {
       courses: [],
       lectures: [],
@@ -114,13 +114,13 @@ export default {
       this.refresh();
     },
   },
-  mounted: function () {
+  mounted: function() {
     this.refresh();
   },
   methods: {
     refresh() {
       auth.currentUser.getIdToken().then(
-        function (token) {
+        function(token) {
           axios
             .get("http://e1f788fb04f4.ngrok.io/getAllCourses", {
               headers: {
@@ -144,12 +144,12 @@ export default {
       });
       return modal.present();
     },
-    onOpenCourse: function (newCourse) {
+    onOpenCourse: function(newCourse) {
       this.lectures = [];
       this.openCourse = newCourse;
 
       auth.currentUser.getIdToken().then(
-        function (token) {
+        function(token) {
           axios
             .get("http://e1f788fb04f4.ngrok.io/getAllLectures", {
               headers: {
@@ -175,7 +175,7 @@ export default {
       });
       return modal.present();
     },
-    openLecture: function (lecture) {
+    openLecture: function(lecture) {
       console.log(lecture);
       window.location.href = "/lecture/" + lecture.id;
     },
