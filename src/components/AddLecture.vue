@@ -11,11 +11,7 @@
     </ion-item>
     <ion-item>
       <ion-label position="floating">Youtube URL</ion-label>
-      <ion-input
-        :ionChange="
-          lectureURL = $event.target.value;
-        "
-      ></ion-input>
+      <ion-input :ionChange="(lectureURL = $event.target.value)"></ion-input>
     </ion-item>
 
     <br />

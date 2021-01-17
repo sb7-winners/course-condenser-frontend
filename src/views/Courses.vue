@@ -96,6 +96,7 @@ export default {
   data: function() {
     return {
       courses: [],
+      lectures: [],
       openCourse: null,
     };
   },
@@ -128,6 +129,26 @@ export default {
     },
     onOpenCourse: function(newCourse) {
       this.openCourse = newCourse;
+      auth.currentUser.getIdToken().then(
+        function(token) {
+          axios
+            .get("http://localhost:5000/getAllLectures", {
+              headers: {
+                Authorization: token,
+              },
+              data: {
+                course_id: newCourse.course_id,
+              },
+            })
+            .then((response) => {
+              console.log(response);
+              this.lectures = response.data.lectures;
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }.bind(this)
+      );
     },
   },
 };
