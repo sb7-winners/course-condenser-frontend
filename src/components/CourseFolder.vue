@@ -1,5 +1,5 @@
 <template>
-  <div class="container" @click="$emit('open-course', name)">
+  <div class="container" @click="$emit('open-course', data)">
     <ion-icon class="course-folder-icon" :name="icon" size="large" />
     {{ name }}
   </div>
@@ -12,6 +12,7 @@ export default {
   props: {
     name: String,
     icon: { type: String, default: "Book" },
+    data: Object,
   },
   components: {
     IonIcon,

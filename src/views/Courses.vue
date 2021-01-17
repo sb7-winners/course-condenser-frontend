@@ -18,8 +18,9 @@
             <div class="folders">
               <course-folder
                 v-for="course in courses"
-                :key="course"
-                :name="course"
+                :key="course.course_id"
+                :name="course.course_name"
+                :data="course"
                 @open-course="onOpenCourse"
               />
               <!-- <course-folder
@@ -37,7 +38,12 @@
             <div v-if="openCourse">
               <ion-text>
                 <h1 style="font-size: 48px; margin-top: -15px;">
-                  {{ openCourse }}
+                  {{ openCourse.course_name }}
+                  <div
+                    v-for="lecture in lectures"
+                    :key="lecture.id"
+                    @click="openLecture"
+                  />
                 </h1>
               </ion-text>
             </div>
@@ -87,23 +93,24 @@ export default {
     IonTitle,
     IonToolbar,
   },
-  data: function () {
+  data: function() {
     return {
-      courses: ["PSTAT 512", "MATH 512", "CS 512", "ASTRO 512"],
-      openCourse: "",
+      courses: [],
+      openCourse: null,
     };
   },
-  mounted: function () {
+  mounted: function() {
     auth.currentUser.getIdToken().then(
-      function (token) {
+      function(token) {
         axios
-          .get("http://localhost:5000/getMostRecents", {
+          .get("http://localhost:5000/getAllCourses", {
             headers: {
               Authorization: token,
             },
           })
           .then((response) => {
             console.log(response);
+            this.courses = response.data.courses;
           })
           .catch((err) => {
             console.log(err);
@@ -119,7 +126,7 @@ export default {
       });
       return modal.present();
     },
-    onOpenCourse: function (newCourse) {
+    onOpenCourse: function(newCourse) {
       this.openCourse = newCourse;
     },
   },
