@@ -11,33 +11,52 @@
     
     <ion-content :fullscreen="true">
       <div id="container">
-        <div id="transcript">
-            <Timestamp></Timestamp>
-        </div>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+                <div>
+                  <lecture-info :title="lectureTitle" :summary="lectureMainSummary" />
+                  <timestamps :data="timestamps" />
+                </div>
+            </ion-col>
+
+            <ion-col>
+              <div>
+                Placeholder secondary content
+              </div>
+            </ion-col>
+            </ion-row>
+          </ion-grid>
       </div>
     </ion-content>
   </ion-page>
 </template>
 
 <script lang="ts">
-import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonSplitPane, IonTitle, IonToolbar } from '@ionic/vue';
-import Timestamp from '../components/Timestamp.vue';
+import { IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonMenuButton, IonPage, IonSplitPane, IonTitle, IonToolbar } from '@ionic/vue';
+import LectureInfo from '../components/LectureInfo.vue';
 
 export default {
   name: 'Folder',
   components: {
     IonButtons,
+    IonCol,
     IonContent,
+    IonGrid,
     IonHeader,
     IonMenuButton,
     IonPage,
     IonTitle,
     IonToolbar,
-    Timestamp
+    LectureInfo
   },
   data() {
       return {
-          lectureTitle: 'PSTAT 120A Lecture 1: Intro to Probability'
+          lectureTitle: 'Lecture 1: Intro to Probability',
+          lectureMainSummary: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus vel erat tempor, rutrum tortor ac, feugiat mi. \
+                               Proin interdum, ligula sed fermentum commodo, erat justo rutrum lacus, quis lobortis velit tellus in velit. \
+                               Quisque felis arcu, consectetur ac imperdiet et, varius ac neque. Sed at sem eros. Donec turpis lectus, euismod \
+                               sed egestas sit amet, vulputate sit amet ex. Nullam eros mauris, ullamcorper vitae varius at, sodales at mi.'
       };
   },
 }
