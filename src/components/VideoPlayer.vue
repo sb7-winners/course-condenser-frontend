@@ -1,11 +1,11 @@
 <template>
-  {{ code }}
+  <div id="player" />
 </template>
 
 <script>
 export default {
   props: {
-    code: String,
+    id: String,
   },
 };
 </script>

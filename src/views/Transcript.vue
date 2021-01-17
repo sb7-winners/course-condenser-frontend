@@ -27,7 +27,7 @@
 
             <ion-col>
               <div>
-                <video-player :code="videoCode" />
+                <video-player :id="videoId" />
                 <transcript-viewer :timestamps="fullTimestamps" />
               </div>
             </ion-col>
@@ -99,7 +99,7 @@ export default {
         ["Lorem ipsum, this is a sentence.", 450.681],
         ["Lorem ipsum, this is a sentence.", 510.612],
       ],
-      videoCode: "bMDVSTnNHEU",
+      videoId: "bMDVSTnNHEU",
     };
   },
 };
