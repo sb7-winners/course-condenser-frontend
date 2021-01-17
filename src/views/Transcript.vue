@@ -21,13 +21,14 @@
                   :courseName="courseName"
                   :color="courseColor"
                 />
-                <timestamps :data="timestamps" />
+                <timestamp-list :timestamps="summaryTimestamps" />
               </div>
             </ion-col>
 
             <ion-col>
               <div>
-                Placeholder secondary content
+                <video-player :code="videoCode" />
+                <transcript-viewer :timestamps="fullTimestamps" />
               </div>
             </ion-col>
           </ion-row>
@@ -50,6 +51,9 @@ import {
   IonToolbar,
 } from "@ionic/vue";
 import LectureInfo from "../components/LectureInfo.vue";
+import TimestampList from "../components/TimestampList.vue";
+import TranscriptViewer from "../components/TranscriptViewer.vue";
+import VideoPlayer from "../components/VideoPlayer.vue";
 
 export default {
   name: "Folder",
@@ -64,6 +68,9 @@ export default {
     IonTitle,
     IonToolbar,
     LectureInfo,
+    TimestampList,
+    TranscriptViewer,
+    VideoPlayer,
   },
   data() {
     return {
@@ -75,6 +82,24 @@ export default {
                                sed egestas sit amet, vulputate sit amet ex. Nullam eros mauris, ullamcorper vitae varius at, sodales at mi.",
       courseName: "PSTAT 512B",
       courseColor: "#1554f6",
+      summaryTimestamps: [
+        ["Lorem ipsum, this is a sentence.", 1.38],
+        ["Lorem ipsum, this is a sentence.", 180.1],
+        ["Lorem ipsum, this is a sentence.", 390.451],
+        ["Lorem ipsum, this is a sentence.", 510.612],
+      ],
+      fullTimestamps: [
+        ["Lorem ipsum, this is a sentence.", 1.38],
+        ["Lorem ipsum, this is a sentence.", 60.1],
+        ["Lorem ipsum, this is a sentence.", 120.451],
+        ["Lorem ipsum, this is a sentence.", 180.1],
+        ["Lorem ipsum, this is a sentence.", 240.38],
+        ["Lorem ipsum, this is a sentence.", 283.199],
+        ["Lorem ipsum, this is a sentence.", 390.451],
+        ["Lorem ipsum, this is a sentence.", 450.681],
+        ["Lorem ipsum, this is a sentence.", 510.612],
+      ],
+      videoCode: "bMDVSTnNHEU",
     };
   },
 };
