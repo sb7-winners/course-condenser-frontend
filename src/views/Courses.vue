@@ -17,16 +17,24 @@
       </ion-header>
 
       <div id="container">
-        <strong class="capitalize">Success bitch</strong>
-        <p>
-          Explore
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
-            href="https://ionicframework.com/docs/components"
-            >UI Components</a
-          >
-        </p>
+        <ion-grid class="grid">
+          <ion-row>
+            <ion-col class="folders-panel">
+              <div class="folders">
+                <course-folder
+                  v-for="course in courses"
+                  :key="course"
+                  :name="course"
+                  @open-course="onOpenCourse"
+                />
+              </div>
+            </ion-col>
+            <ion-col>
+              Lectures for current course
+              {{ openCourse }}
+            </ion-col>
+          </ion-row>
+        </ion-grid>
       </div>
     </ion-content>
   </ion-page>
@@ -36,29 +44,46 @@
 import {
   IonButtons,
   IonContent,
+  IonGrid,
   IonHeader,
   IonMenuButton,
   IonPage,
   IonTitle,
   IonToolbar,
 } from "@ionic/vue";
+import CourseFolder from "../components/CourseFolder.vue";
 
 export default {
   name: "Folder",
   components: {
+    CourseFolder,
     IonButtons,
     IonContent,
+    IonGrid,
     IonHeader,
     IonMenuButton,
     IonPage,
     IonTitle,
     IonToolbar,
   },
+  data: function() {
+    return {
+      courses: ["PSTAT 512", "MATH 512", "CS 512", "ASTRO 512"],
+      openCourse: "",
+    };
+  },
+  methods: {
+    onOpenCourse: function(newCourse) {
+      this.openCourse = newCourse;
+    },
+  },
 };
 </script>
 
 <style scoped>
 #container {
+  height: 100%;
+  padding-top: 80px;
   text-align: center;
   position: absolute;
   left: 0;
@@ -81,5 +106,19 @@ export default {
 
 #container a {
   text-decoration: none;
+}
+
+.grid {
+  height: 100%;
+}
+
+.folders-panel {
+  background-color: var(--ion-color-light);
+}
+
+.folders {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
 </style>
