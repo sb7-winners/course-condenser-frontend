@@ -23,11 +23,11 @@
                 :data="course"
                 @open-course="onOpenCourse"
               />
-              <!-- <course-folder
+              <course-folder
                 icon="add"
                 name="New Course"
-                @open-course="onOpenCourse"
-              /> -->
+                @click="createCourse"
+              />
             </div>
           </ion-col>
 
@@ -37,7 +37,7 @@
           <ion-col>
             <div v-if="openCourse">
               <ion-text>
-                <h1 style="font-size: 48px; margin-top: -15px;">
+                <h1 style="font-size: 48px; margin-top: -15px">
                   {{ openCourse.course_name }}
                 </h1>
               </ion-text>
@@ -82,6 +82,7 @@ import { auth } from "../firebase.js";
 import axios from "axios";
 import CourseFolder from "../components/CourseFolder.vue";
 import AddLecture from "../components/AddLecture.vue";
+import AddCourse from "../components/AddCourse.vue";
 import LectureFile from "../components/LectureFile.vue";
 export default {
   name: "Folder",
@@ -96,33 +97,46 @@ export default {
     IonToolbar,
     LectureFile,
   },
-  data: function() {
+  data: function () {
     return {
       courses: [],
       lectures: [],
       openCourse: null,
     };
   },
-  mounted: function() {
-    auth.currentUser.getIdToken().then(
-      function(token) {
-        axios
-          .get("http://e1f788fb04f4.ngrok.io/getAllCourses", {
-            headers: {
-              Authorization: token,
-            },
-          })
-          .then((response) => {
-            console.log(response);
-            this.courses = response.data.courses;
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      }.bind(this)
-    );
+  computed: {
+    thing() {
+      return this.$store.state.refresh;
+    },
+  },
+  watch: {
+    thing() {
+      this.refresh();
+    },
+  },
+  mounted: function () {
+    this.refresh();
   },
   methods: {
+    refresh() {
+      auth.currentUser.getIdToken().then(
+        function (token) {
+          axios
+            .get("http://e1f788fb04f4.ngrok.io/getAllCourses", {
+              headers: {
+                Authorization: token,
+              },
+            })
+            .then((response) => {
+              console.log(response);
+              this.courses = response.data.courses;
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }.bind(this)
+      );
+    },
     async openCreateLecture() {
       const modal = await popoverController.create({
         component: AddLecture,
@@ -130,12 +144,12 @@ export default {
       });
       return modal.present();
     },
-    onOpenCourse: function(newCourse) {
+    onOpenCourse: function (newCourse) {
       this.lectures = [];
       this.openCourse = newCourse;
 
       auth.currentUser.getIdToken().then(
-        function(token) {
+        function (token) {
           axios
             .get("http://e1f788fb04f4.ngrok.io/getAllLectures", {
               headers: {
@@ -155,7 +169,13 @@ export default {
         }.bind(this)
       );
     },
-    openLecture: function(lecture) {
+    async createCourse() {
+      const modal = await popoverController.create({
+        component: AddCourse,
+      });
+      return modal.present();
+    },
+    openLecture: function (lecture) {
       console.log(lecture);
       window.location.href = "/lecture/" + lecture.id;
     },
