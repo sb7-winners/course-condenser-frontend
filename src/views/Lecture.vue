@@ -21,6 +21,7 @@
                   :courseName="courseName"
                   :color="courseColor"
                 />
+                {{ $route.params.id }}
                 <timestamp-list :timestamps="summaryTimestamps" />
               </div>
             </ion-col>
@@ -54,6 +55,7 @@ import LectureInfo from "../components/LectureInfo.vue";
 import TimestampList from "../components/TimestampList.vue";
 import TranscriptViewer from "../components/TranscriptViewer.vue";
 import VideoPlayer from "../components/VideoPlayer.vue";
+import axios from "axios";
 
 export default {
   name: "Folder",
@@ -101,6 +103,10 @@ export default {
       ],
       videoId: "bMDVSTnNHEU",
     };
+  },
+  mounted: function() {
+    let id = $route.params.id;
+    axios.get;
   },
 };
 </script>

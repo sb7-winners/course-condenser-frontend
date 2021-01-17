@@ -39,13 +39,14 @@
               <ion-text>
                 <h1 style="font-size: 48px; margin-top: -15px;">
                   {{ openCourse.course_name }}
-                  <div
-                    v-for="lecture in lectures"
-                    :key="lecture.id"
-                    @click="openLecture"
-                  />
                 </h1>
               </ion-text>
+              <lecture-file
+                v-for="lecture in lectures"
+                :key="lecture.id"
+                :data="lecture"
+                @click="openLecture(lecture)"
+              />
             </div>
             <ion-text v-else>
               <h2
@@ -81,6 +82,7 @@ import { auth } from "../firebase.js";
 import axios from "axios";
 import CourseFolder from "../components/CourseFolder.vue";
 import AddLecture from "../components/AddLecture.vue";
+import LectureFile from "../components/LectureFile.vue";
 export default {
   name: "Folder",
   components: {
@@ -92,6 +94,7 @@ export default {
     IonHeader,
     IonTitle,
     IonToolbar,
+    LectureFile,
   },
   data: function() {
     return {
@@ -104,7 +107,7 @@ export default {
     auth.currentUser.getIdToken().then(
       function(token) {
         axios
-          .get("https://letslearne.loca.lt/getAllCourses", {
+          .get("http://e1f788fb04f4.ngrok.io/getAllCourses", {
             headers: {
               Authorization: token,
             },
@@ -128,15 +131,17 @@ export default {
       return modal.present();
     },
     onOpenCourse: function(newCourse) {
+      this.lectures = [];
       this.openCourse = newCourse;
+
       auth.currentUser.getIdToken().then(
         function(token) {
           axios
-            .get("http://localhost:5000/getAllLectures", {
+            .get("http://e1f788fb04f4.ngrok.io/getAllLectures", {
               headers: {
                 Authorization: token,
               },
-              data: {
+              params: {
                 course_id: newCourse.course_id,
               },
             })
@@ -149,6 +154,10 @@ export default {
             });
         }.bind(this)
       );
+    },
+    openLecture: function(lecture) {
+      console.log(lecture);
+      window.location.href = "/lecture/" + lecture.id;
     },
   },
 };

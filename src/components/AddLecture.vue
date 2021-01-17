@@ -7,11 +7,11 @@
   <ion-content class="ion-padding">
     <ion-item>
       <ion-label position="floating">Lecture Name</ion-label>
-      <ion-input :ionChange="(lectureName = $event.target.value)"></ion-input>
+      <ion-input @ionChange="updateLectureName"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="floating">Youtube URL</ion-label>
-      <ion-input :ionChange="(lectureURL = $event.target.value)"></ion-input>
+      <ion-input @ionChange="updateLectureURL"></ion-input>
     </ion-item>
 
     <br />
@@ -40,20 +40,23 @@ export default defineComponent({
   components: { IonContent, IonHeader, IonTitle, IonToolbar },
   methods: {
     save() {
-      console.log(this.lecture_url);
+      console.log(this.$data);
       auth.currentUser.getIdToken().then(
-        function (token) {
+        function(token) {
           axios
-            .post("https://letslearne.loca.lt/processLecture", {
-              headers: {
-                Authorization: token,
-              },
-              data: {
+            .post(
+              "http://e1f788fb04f4.ngrok.io/processLecture",
+              {
                 url: this.lectureURL,
                 title: this.lectureName,
                 course_id: this.course.course_id,
               },
-            })
+              {
+                headers: {
+                  Authorization: token,
+                },
+              }
+            )
             .then((response) => {
               console.log(response);
             })
@@ -62,6 +65,14 @@ export default defineComponent({
             });
         }.bind(this)
       );
+    },
+    updateLectureName(event) {
+      console.log(event);
+      this.lectureName = event.target.value;
+    },
+    updateLectureURL(event) {
+      console.log(event);
+      this.lectureURL = event.target.value;
     },
   },
 });
