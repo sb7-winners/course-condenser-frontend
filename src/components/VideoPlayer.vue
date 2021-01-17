@@ -1,7 +1,6 @@
 <template>
-  <div id="player" />
+  <youtube-iframe :video-id="id" />
 </template>
-
 <script>
 export default {
   props: {

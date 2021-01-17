@@ -20,6 +20,9 @@ import "@ionic/vue/css/text-transformation.css";
 import "@ionic/vue/css/flex-utils.css";
 import "@ionic/vue/css/display.css";
 
+/* YouTube plugin */
+import VueYoutubeIframe from "@techassi/vue-youtube-iframe";
+
 /* Theme variables */
 import "./theme/variables.css";
 
@@ -29,7 +32,8 @@ auth.onAuthStateChanged(() => {
   if (!app) {
     app = createApp(App)
       .use(IonicVue)
-      .use(router);
+      .use(router)
+      .use(VueYoutubeIframe);
 
     router.isReady().then(() => {
       app.mount("#app");
