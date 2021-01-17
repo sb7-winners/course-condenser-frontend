@@ -15,6 +15,12 @@
 <script>
 import Timestamp from "./Timestamp.vue";
 
+function numericTime(time) {
+  let minutes = time.substring(0, 2);
+  let seconds = time.substring(3, 5);
+  return parseInt(minutes) * 60 + parseInt(seconds);
+}
+
 export default {
   props: {
     timestamps: Array,
@@ -33,8 +39,8 @@ export default {
     time: function(val) {
       // Find last timestamp with time < current time, or if none exist, use first timestamp
       for (let i = this.timestamps.length - 1; i >= 0; i--) {
-        if (this.timestamps[i][1] <= val || i == 0) {
-          this.currentSentenceTime = this.timestamps[i][1];
+        if (numericTime(this.timestamps[i].start_time) <= val || i == 0) {
+          this.currentSentenceTime = numericTime(this.timestamps[i].start_time);
           break;
         }
       }

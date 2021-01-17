@@ -80,12 +80,7 @@ export default {
       lectureMainSummary: "",
       courseName: "PSTAT 512B",
       courseColor: "#1554f6",
-      summaryTimestamps: [
-        ["Lorem ipsum, this is a sentence.", 1.38],
-        ["Lorem ipsum, this is a sentence.", 180.1],
-        ["Lorem ipsum, this is a sentence.", 390.451],
-        ["Lorem ipsum, this is a sentence.", 510.612],
-      ],
+      summaryTimestamps: [],
       fullTimestamps: [],
       videoId: "",
     };
@@ -115,6 +110,18 @@ export default {
             if (res.data.url.match(p)) {
               this.videoId = RegExp.$1;
             }
+
+            let summarySentences = res.data.summarized_transcript.split(".");
+            let tmpData = [];
+            for (let sentence in summarySentences) {
+              tmpData.push({
+                sentence: sentence,
+                start_time: res.data.sentences.find(
+                  (element) => element.sentence == sentence
+                ).start_time,
+              });
+            }
+            this.summaryTimestamps = tmpData;
 
             console.log(this);
           })

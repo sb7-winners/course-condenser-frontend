@@ -9,30 +9,42 @@
 export default {
   props: {
     sentence: String,
-    time: Number,
+    time: String,
     currentTime: Number,
     inMenu: Boolean,
   },
   computed: {
     humanTimestamp: function() {
-      return (
-        Math.floor(this.time / 60).toString() +
-        ":" +
-        Math.round(this.time % 60)
-          .toString()
-          .padStart(2, "0")
-      );
+      if (this.time) {
+        return this.time.substring(0, 5);
+      } else {
+        return "00:00";
+      }
+    },
+
+    numericTime: function() {
+      console.log(this.time);
+      if (this.time) {
+        let minutes = this.time.substring(0, 2);
+        let seconds = this.time.substring(3, 5);
+        return parseInt(minutes) * 60 + parseInt(seconds);
+      } else {
+        return 0;
+      }
     },
 
     classname: function() {
-      return (this.time == this.currentTime ? "active" : "") + " separated-row";
+      return (
+        (this.numericTime == this.currentTime ? "active" : "") +
+        " separated-row"
+      );
     },
   },
   methods: {
     setTime() {
       if (this.inMenu) {
         this.$store.commit("set", {
-          time: this.time,
+          time: this.numericTime,
         });
       }
     },
