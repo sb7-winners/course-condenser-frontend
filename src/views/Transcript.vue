@@ -5,29 +5,23 @@
         <ion-buttons slot="start">
           <ion-menu-button color="primary"></ion-menu-button>
         </ion-buttons>
-        <ion-title>{{ $route.params.id }}</ion-title>
+        <ion-title>{{ lectureTitle }}</ion-title>
       </ion-toolbar>
     </ion-header>
     
     <ion-content :fullscreen="true">
-      <ion-header collapse="condense">
-        <ion-toolbar>
-        </ion-toolbar>
-      </ion-header>
-    
       <div id="container">
-        <strong class="capitalize">{{ $route.params.id }}</strong>
-        <p>Explore <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UIX Components</a></p>
-        <p>{{lectureTitle}}</p>
-        <timestamp></timestamp>
+        <div id="transcript">
+            <Timestamp></Timestamp>
+        </div>
       </div>
     </ion-content>
   </ion-page>
 </template>
 
 <script lang="ts">
-import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
-import timestamp from '../components/Timestamp.vue';
+import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonSplitPane, IonTitle, IonToolbar } from '@ionic/vue';
+import Timestamp from '../components/Timestamp.vue';
 
 export default {
   name: 'Folder',
@@ -39,11 +33,11 @@ export default {
     IonPage,
     IonTitle,
     IonToolbar,
-    timestamp
+    Timestamp
   },
   data() {
       return {
-          lectureTitle: 'hello world'
+          lectureTitle: 'PSTAT 120A Lecture 1: Intro to Probability'
       };
   },
 }
