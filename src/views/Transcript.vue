@@ -8,7 +8,7 @@
         <ion-title>{{ lectureTitle }}</ion-title>
       </ion-toolbar>
     </ion-header>
-    
+
     <ion-content :fullscreen="true">
       <div id="container">
         <ion-grid>
@@ -37,7 +37,7 @@ import { IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonMenuButton, IonP
 import LectureInfo from '../components/LectureInfo.vue';
 
 export default {
-  name: 'Folder',
+  name: "Folder",
   components: {
     IonButtons,
     IonCol,
@@ -59,7 +59,7 @@ export default {
                                sed egestas sit amet, vulputate sit amet ex. Nullam eros mauris, ullamcorper vitae varius at, sodales at mi.'
       };
   },
-}
+};
 </script>
 
 <style scoped>
