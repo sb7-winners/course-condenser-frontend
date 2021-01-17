@@ -8,29 +8,44 @@
         <ion-title>{{ $route.params.id }}</ion-title>
       </ion-toolbar>
     </ion-header>
-    
+
     <ion-content :fullscreen="true">
       <ion-header collapse="condense">
-        <ion-toolbar>
-        </ion-toolbar>
+        <ion-toolbar> </ion-toolbar>
       </ion-header>
-    
+
       <div id="container">
         <strong class="capitalize">{{ $route.params.id }}</strong>
-        <p>Explore <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UIX Components</a></p>
-        <p>{{lectureTitle}}</p>
+        <p>
+          Explore
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://ionicframework.com/docs/components"
+            >UIX Components</a
+          >
+        </p>
+        <p>{{ lectureTitle }}</p>
         <timestamp></timestamp>
       </div>
     </ion-content>
   </ion-page>
 </template>
 
-<script lang="ts">
-import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
-import timestamp from '../components/Timestamp.vue';
+<script>
+import {
+  IonButtons,
+  IonContent,
+  IonHeader,
+  IonMenuButton,
+  IonPage,
+  IonTitle,
+  IonToolbar,
+} from "@ionic/vue";
+import timestamp from "../components/Timestamp.vue";
 
 export default {
-  name: 'Folder',
+  name: "Folder",
   components: {
     IonButtons,
     IonContent,
@@ -39,14 +54,14 @@ export default {
     IonPage,
     IonTitle,
     IonToolbar,
-    timestamp
+    timestamp,
   },
   data() {
-      return {
-          lectureTitle: 'hello world'
-      };
+    return {
+      lectureTitle: "hello world",
+    };
   },
-}
+};
 </script>
 
 <style scoped>
