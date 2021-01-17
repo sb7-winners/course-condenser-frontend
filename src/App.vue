@@ -1,114 +1,51 @@
 <template>
   <IonApp>
-    <ion-router-outlet id="main-content"></ion-router-outlet>
+    <ion-page>
+      <ion-header :translucent="true">
+        <ion-toolbar>
+          <ion-title>Learne</ion-title>
+          <ion-buttons slot="primary" v-if="$route.path !== '/'">
+            <ion-button @click="logout" color="secondary">Logout</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-router-outlet id="main-content"> </ion-router-outlet>
+    </ion-page>
   </IonApp>
 </template>
 
-<script>
-import { IonApp, IonRouterOutlet } from "@ionic/vue";
-import { defineComponent, ref } from "vue";
-import { useRoute } from "vue-router";
+<script >
 import {
-  archiveOutline,
-  archiveSharp,
-  bookmarkOutline,
-  bookmarkSharp,
-  heartOutline,
-  heartSharp,
-  mailOutline,
-  mailSharp,
-  paperPlaneOutline,
-  paperPlaneSharp,
-  trashOutline,
-  trashSharp,
-  warningOutline,
-  warningSharp,
-} from "ionicons/icons";
+  IonApp,
+  IonRouterOutlet,
+  IonTitle,
+  IonToolbar,
+  IonHeader,
+  IonButtons,
+  IonButton,
+  IonPage,
+} from "@ionic/vue";
+import { auth } from "./firebase";
+import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "App",
+  methods: {
+    async logout() {
+      await auth.signOut();
+      this.$router.push("/");
+    },
+  },
   components: {
+    IonHeader,
+    IonTitle,
+    IonButtons,
+    IonToolbar,
+    IonButton,
+    IonPage,
     IonApp,
     IonRouterOutlet,
-  },
-  setup() {
-    const selectedIndex = ref(0);
-    const appPages = [
-      {
-        title: "Inbox",
-        url: "/folder/Inbox",
-        iosIcon: mailOutline,
-        mdIcon: mailSharp,
-      },
-      {
-        title: "Outbox",
-        url: "/folder/Outbox",
-        iosIcon: paperPlaneOutline,
-        mdIcon: paperPlaneSharp,
-      },
-      {
-        title: "Favorites",
-        url: "/folder/Favorites",
-        iosIcon: heartOutline,
-        mdIcon: heartSharp,
-      },
-      {
-        title: "Archived",
-        url: "/folder/Archived",
-        iosIcon: archiveOutline,
-        mdIcon: archiveSharp,
-      },
-      {
-        title: "Trash",
-        url: "/folder/Trash",
-        iosIcon: trashOutline,
-        mdIcon: trashSharp,
-      },
-      {
-        title: "Spam",
-        url: "/folder/Spam",
-        iosIcon: warningOutline,
-        mdIcon: warningSharp,
-      },
-    ];
-    const labels = [
-      "Family",
-      "Friends",
-      "Notes",
-      "Work",
-      "Travel",
-      "Reminders",
-    ];
-
-    const path = window.location.pathname.split("folder/")[1];
-    if (path !== undefined) {
-      selectedIndex.value = appPages.findIndex(
-        (page) => page.title.toLowerCase() === path.toLowerCase()
-      );
-    }
-
-    const route = useRoute();
-
-    return {
-      selectedIndex,
-      appPages,
-      labels,
-      archiveOutline,
-      archiveSharp,
-      bookmarkOutline,
-      bookmarkSharp,
-      heartOutline,
-      heartSharp,
-      mailOutline,
-      mailSharp,
-      paperPlaneOutline,
-      paperPlaneSharp,
-      trashOutline,
-      trashSharp,
-      warningOutline,
-      warningSharp,
-      isSelected: (url) => (url === route.path ? "selected" : ""),
-    };
   },
 });
 </script>
