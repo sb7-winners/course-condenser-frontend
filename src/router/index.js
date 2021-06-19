@@ -3,8 +3,7 @@ import { auth } from "../firebase";
 const routes = [
   {
     path: "/",
-    // component: () => import("../views/Index.vue"),
-    component: () => import("../views/Courses.vue"),
+    component: () => import("../views/Index.vue"),
     beforeEnter: (to, from, next) => {
       if (auth.currentUser) {
         next("/courses/");
@@ -21,7 +20,7 @@ const routes = [
     },
   },
   {
-    path: "/lecture/:id",
+    path: "/lecture/",
     component: () => import("../views/Lecture.vue"),
     meta: {
       requiresAuth: true,
@@ -35,13 +34,11 @@ const routes = [
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  base: process.env.BASE_URL,
   routes,
 });
 
 router.beforeEach((to, from, next) => {
   const requiresAuth = to.matched.some((x) => x.meta.requiresAuth);
-  next();
   if (requiresAuth && !auth.currentUser) {
     next("/");
   } else {
