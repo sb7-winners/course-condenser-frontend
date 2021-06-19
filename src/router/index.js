@@ -3,7 +3,7 @@ import { auth } from "../firebase";
 const routes = [
   {
     path: "/",
-    component: () => import("../views/Index.vue"),
+    component: () => import("../views/Courses.vue"),
     beforeEnter: (to, from, next) => {
       if (auth.currentUser) {
         next("/courses/");
@@ -38,6 +38,7 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
+  next();
   const requiresAuth = to.matched.some((x) => x.meta.requiresAuth);
   if (requiresAuth && !auth.currentUser) {
     next("/");
