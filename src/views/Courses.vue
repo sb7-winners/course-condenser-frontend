@@ -189,7 +189,7 @@ export default {
     },
     openLecture: function (lecture) {
       console.log(lecture);
-      window.location.href = "/lecture/" + lecture.id;
+      window.location.href = process.env.BASE_URL + "/lecture/" + lecture.id;
     },
   },
 };
