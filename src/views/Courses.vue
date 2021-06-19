@@ -97,10 +97,15 @@ export default {
     IonToolbar,
     LectureFile,
   },
-  data: function() {
+  data: function () {
     return {
-      courses: [],
-      lectures: [],
+      courses: [{ course_name: "MIT 6.0002", course_id: 1 }],
+      lectures: [
+        { title: "Lecture 1" },
+        { title: "Lecture 2" },
+        { title: "Lecture 5" },
+        { title: "Lecture 8" },
+      ],
       openCourse: null,
     };
   },
@@ -114,13 +119,13 @@ export default {
       this.refresh();
     },
   },
-  mounted: function() {
+  mounted: function () {
     this.refresh();
   },
   methods: {
     refresh() {
       auth.currentUser.getIdToken().then(
-        function(token) {
+        function (token) {
           axios
             .get("http://e1f788fb04f4.ngrok.io/getAllCourses", {
               headers: {
@@ -144,30 +149,37 @@ export default {
       });
       return modal.present();
     },
-    onOpenCourse: function(newCourse) {
-      this.lectures = [];
+    onOpenCourse: function (newCourse) {
       this.openCourse = newCourse;
+      this.lectures = [
+        { title: "Lecture 1" },
+        { title: "Lecture 2" },
+        { title: "Lecture 5" },
+        { title: "Lecture 8" },
+      ];
+      return;
+      // this.openCourse = newCourse;
 
-      auth.currentUser.getIdToken().then(
-        function(token) {
-          axios
-            .get("http://e1f788fb04f4.ngrok.io/getAllLectures", {
-              headers: {
-                Authorization: token,
-              },
-              params: {
-                course_id: newCourse.course_id,
-              },
-            })
-            .then((response) => {
-              console.log(response);
-              this.lectures = response.data.lectures;
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-        }.bind(this)
-      );
+      // auth.currentUser.getIdToken().then(
+      //   function (token) {
+      //     axios
+      //       .get("http://e1f788fb04f4.ngrok.io/getAllLectures", {
+      //         headers: {
+      //           Authorization: token,
+      //         },
+      //         params: {
+      //           course_id: newCourse.course_id,
+      //         },
+      //       })
+      //       .then((response) => {
+      //         console.log(response);
+      //         this.lectures = response.data.lectures;
+      //       })
+      //       .catch((err) => {
+      //         console.log(err);
+      //       });
+      //   }.bind(this)
+      // );
     },
     async createCourse() {
       const modal = await popoverController.create({
@@ -175,7 +187,7 @@ export default {
       });
       return modal.present();
     },
-    openLecture: function(lecture) {
+    openLecture: function (lecture) {
       console.log(lecture);
       window.location.href = "/lecture/" + lecture.id;
     },

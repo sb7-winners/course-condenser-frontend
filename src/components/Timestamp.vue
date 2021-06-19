@@ -7,6 +7,9 @@
 
 <script>
 export default {
+  mounted() {
+    console.log(this.sentence, this.time);
+  },
   props: {
     sentence: String,
     time: String,
@@ -14,7 +17,7 @@ export default {
     inMenu: Boolean,
   },
   computed: {
-    humanTimestamp: function() {
+    humanTimestamp: function () {
       if (this.time) {
         return this.time.substring(0, 5);
       } else {
@@ -22,7 +25,7 @@ export default {
       }
     },
 
-    numericTime: function() {
+    numericTime: function () {
       console.log(this.time);
       if (this.time) {
         let minutes = this.time.substring(0, 2);
@@ -33,7 +36,7 @@ export default {
       }
     },
 
-    classname: function() {
+    classname: function () {
       return (
         (this.numericTime == this.currentTime ? "active" : "") +
         " separated-row"

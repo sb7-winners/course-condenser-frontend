@@ -25,18 +25,18 @@ export default {
   props: {
     timestamps: Array,
   },
-  data: function() {
+  data: function () {
     return {
       currentSentenceTime: 0,
     };
   },
   computed: {
-    time: function() {
+    time: function () {
       return this.$store.state.time;
     },
   },
   watch: {
-    time: function(val) {
+    time: function (val) {
       // Find last timestamp with time < current time, or if none exist, use first timestamp
       for (let i = this.timestamps.length - 1; i >= 0; i--) {
         if (numericTime(this.timestamps[i].start_time) <= val || i == 0) {
