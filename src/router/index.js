@@ -20,7 +20,7 @@ const routes = [
     },
   },
   {
-    path: "/lecture/:id",
+    path: "/lecture/",
     component: () => import("../views/Lecture.vue"),
     meta: {
       requiresAuth: true,
