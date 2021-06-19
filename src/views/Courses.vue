@@ -11,6 +11,26 @@
       </ion-toolbar>
     </ion-header>
 
+    <div
+      style="
+        position: absolute;
+        width: 400px;
+        color: black;
+        bottom: 10px;
+        left: calc(50vw - 200px);
+        z-index: 99;
+      "
+    >
+      This is a mocked out version of the frontend, as we currently do not have
+      a running backend to avoid incurring server costs. Checkout the backend
+      code
+      <a
+        href="https://github.com/sb7-winners/course-condenser-backend"
+        target="_blank"
+      >
+        here</a
+      >
+    </div>
     <div id="container">
       <ion-grid class="grid">
         <ion-row>
