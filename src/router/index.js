@@ -3,7 +3,8 @@ import { auth } from "../firebase";
 const routes = [
   {
     path: "/",
-    component: () => import("../views/Index.vue"),
+    // component: () => import("../views/Index.vue"),
+    component: () => import("../views/Courses.vue"),
     beforeEnter: (to, from, next) => {
       if (auth.currentUser) {
         next("/courses/");
@@ -34,6 +35,7 @@ const routes = [
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
+  base: process.env.BASE_URL,
   routes,
 });
 
